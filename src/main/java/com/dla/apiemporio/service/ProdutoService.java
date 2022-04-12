@@ -1,0 +1,58 @@
+package com.dla.apiemporio.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.dla.apiemporio.model.Produto;
+import com.dla.apiemporio.repository.ProdutoRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ProdutoService {
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
+
+    public List<Produto> findAll() {
+        return produtoRepository.findAll();
+    }
+
+    public Optional<Produto> findById(Long id) {
+        return produtoRepository.findById(id);
+    }
+
+    public Produto save(Produto produto) throws Exception {
+        List<Produto> produtos = findByGtin(produto.getGtinProduto());
+        if (produtos.size() > 0) {
+            throw new Exception("Produto já cadastrado!");
+        }
+        produtoRepository.save(produto);
+        return produto;
+    }
+
+    public void delete(Long id) throws Exception {
+        Optional<Produto> produto = findById(id);
+        if (produto.isPresent()) {
+            produtoRepository.deleteById(id);
+        } else {
+            throw new Exception("Produto não encontrado!");
+        }
+
+    }
+
+    public void update(Long id, Produto produto) throws Exception {
+        Optional<Produto> produtoFinded = findById(id);
+        if (produtoFinded.isPresent()) {
+            produtoFinded.get().setFromObject(produto);
+            produtoRepository.save(produtoFinded.get());
+        } else {
+            throw new Exception("Produto não encontrado!");
+        }
+
+    }
+
+    private List<Produto> findByGtin(Long id) {
+        return produtoRepository.findByGtinProduto(id);
+    }
+
+}

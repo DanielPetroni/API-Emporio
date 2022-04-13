@@ -53,10 +53,9 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public Produto update(@RequestBody(required = false) Produto produto, @PathVariable("id") Long id,
             HttpServletResponse response) {
-        System.out.println(produto);
         if (produto == null || !Produto.isValid(produto)) {
             System.out.println("ENTROU AQUi");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto inválido!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválido!");
         }
         try {
             produtoService.update(id, produto);

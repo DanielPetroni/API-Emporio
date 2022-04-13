@@ -1,7 +1,6 @@
 package com.dla.apiemporio.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.dla.apiemporio.model.Produto;
 import com.dla.apiemporio.repository.ProdutoRepository;
@@ -17,8 +16,8 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Optional<Produto> findById(Long id) {
-        return produtoRepository.findById(id);
+    public Produto findById(Long id) {
+        return produtoRepository.getById(id);
     }
 
     public Produto save(Produto produto) throws Exception {
@@ -31,8 +30,8 @@ public class ProdutoService {
     }
 
     public void delete(Long id) throws Exception {
-        Optional<Produto> produto = findById(id);
-        if (produto.isPresent()) {
+        Produto produto = produtoRepository.getById(id);
+        if (produto != null) {
             produtoRepository.deleteById(id);
         } else {
             throw new Exception("Produto não encontrado!");
@@ -41,10 +40,10 @@ public class ProdutoService {
     }
 
     public void update(Long id, Produto produto) throws Exception {
-        Optional<Produto> produtoFinded = findById(id);
-        if (produtoFinded.isPresent()) {
-            produtoFinded.get().setFromObject(produto);
-            produtoRepository.save(produtoFinded.get());
+        Produto produtoFinded = produtoRepository.getById(id);
+        if (produtoFinded != null) {
+            produtoFinded.setFromObject(produto);
+            produtoRepository.save(produtoFinded);
         } else {
             throw new Exception("Produto não encontrado!");
         }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +33,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Produto> findById(@PathVariable("id") Long id) {
+    public Produto findById(@PathVariable("id") Long id) {
         return produtoService.findById(id);
     }
 

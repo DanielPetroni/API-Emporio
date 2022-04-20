@@ -3,11 +3,11 @@ Projeto de aplicação de uma venda virtual, com o objetivo de explorar os princ
 
 # Desenvolvedores
 
-Ana Larysa Silva Lima
+• Ana Larysa Silva Lima
 
-Daniel Petroni
+• Daniel Petroni
 
-Léo da Silva Quallio
+• Léo da Silva Quallio
 
 # Tecnologias usadas:
   
@@ -17,7 +17,7 @@ Léo da Silva Quallio
 
 # Como executar na sua máquina:
 
-• Instalar o docker.
+• Instale o docker na sua máquina.
 
 • Clone o repositório para sua máquina executando o seguindo comando no terminal:
 Git clone https://github.com/DanielPetroni/API-Emporio.git

@@ -7,6 +7,9 @@ import javax.persistence.Id;
 
 @Entity
 public class Endereco {
+    public Endereco() {
+    }
+
     public Endereco(String ruaEndereco, String bairroEndereco, String cidadedEndereco, String ufEndereco) {
         this.ruaEndereco = ruaEndereco;
         this.bairroEndereco = bairroEndereco;

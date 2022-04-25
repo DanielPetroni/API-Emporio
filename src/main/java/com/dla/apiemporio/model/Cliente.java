@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Cliente {
 
+    public Cliente() {
+    }
+
     public Cliente(String nomeCliente) {
         this.nomeCliente = nomeCliente;
     }
@@ -20,7 +23,7 @@ public class Cliente {
 
     private String nomeCliente;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private Long cpfCliente;
 
     private String emailCliente;
@@ -31,6 +34,17 @@ public class Cliente {
     @JoinColumn(name = "idEndereco")
     private Endereco idEndereco;
 
+    public Cliente(String nomeCliente, Long cpfCliente, String emailCliente, String telefoneCliente) {
+        this.nomeCliente = nomeCliente;
+        this.cpfCliente = cpfCliente;
+        this.emailCliente = emailCliente;
+        this.telefoneCliente = telefoneCliente;
+
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
     public String getNomeCliente() {
         return nomeCliente;
     }

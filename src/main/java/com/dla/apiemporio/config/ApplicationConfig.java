@@ -1,5 +1,6 @@
 package com.dla.apiemporio.config;
 
+import com.dla.apiemporio.service.ClienteService;
 import com.dla.apiemporio.service.EnderecoService;
 import com.dla.apiemporio.service.ProdutoService;
 import com.dla.apiemporio.service.UserService;
@@ -22,6 +23,11 @@ public class ApplicationConfig {
     @Bean
     public EnderecoService enderecoService() {
         return new EnderecoService();
+    }
+
+    @Bean
+    public ClienteService clienteService() {
+        return new ClienteService();
     }
 
 }

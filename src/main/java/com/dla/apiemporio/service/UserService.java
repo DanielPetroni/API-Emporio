@@ -2,7 +2,7 @@ package com.dla.apiemporio.service;
 
 import java.util.List;
 
-import com.dla.apiemporio.model.Usuario;
+import com.dla.apiemporio.entity.Usuario;
 import com.dla.apiemporio.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

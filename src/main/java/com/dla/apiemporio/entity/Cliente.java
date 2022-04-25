@@ -1,4 +1,4 @@
-package com.dla.apiemporio.model;
+package com.dla.apiemporio.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

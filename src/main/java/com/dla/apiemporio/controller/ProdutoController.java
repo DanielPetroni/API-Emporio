@@ -1,7 +1,6 @@
 package com.dla.apiemporio.controller;
 
-import com.dla.apiemporio.model.Produto;
-
+import com.dla.apiemporio.entity.Produto;
 import com.dla.apiemporio.service.ProdutoService;
 
 import org.springframework.beans.factory.annotation.Autowired;

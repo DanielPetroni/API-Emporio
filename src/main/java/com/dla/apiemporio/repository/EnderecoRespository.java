@@ -1,6 +1,6 @@
 package com.dla.apiemporio.repository;
 
-import com.dla.apiemporio.model.Endereco;
+import com.dla.apiemporio.entity.Endereco;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

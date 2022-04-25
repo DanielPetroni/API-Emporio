@@ -2,7 +2,7 @@ package com.dla.apiemporio.repository;
 
 import java.util.List;
 
-import com.dla.apiemporio.model.Cliente;
+import com.dla.apiemporio.entity.Cliente;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

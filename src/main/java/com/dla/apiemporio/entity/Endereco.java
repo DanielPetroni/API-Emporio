@@ -1,4 +1,4 @@
-package com.dla.apiemporio.model;
+package com.dla.apiemporio.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,13 +21,10 @@ public class Endereco {
     @GeneratedValue
     private Long idEndereco;
 
-    @Column(nullable = false)
     private String ruaEndereco;
 
-    @Column(nullable = false)
     private String bairroEndereco;
 
-    @Column(nullable = false)
     private String cidadedEndereco;
 
     @Column(length = 2)

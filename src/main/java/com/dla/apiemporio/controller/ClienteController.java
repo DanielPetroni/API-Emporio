@@ -3,12 +3,11 @@ package com.dla.apiemporio.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dla.apiemporio.model.Cliente;
-import com.dla.apiemporio.model.Endereco;
+import com.dla.apiemporio.dto.DTOCliente;
+import com.dla.apiemporio.entity.Cliente;
+import com.dla.apiemporio.entity.Endereco;
 import com.dla.apiemporio.service.ClienteService;
 import com.dla.apiemporio.service.EnderecoService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,32 +39,17 @@ public class ClienteController {
     }
 
     @PostMapping("/")
-    public void create(@RequestBody String json, HttpServletResponse response) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    public void create(@RequestBody DTOCliente DTOCliente, HttpServletResponse response) {
+        if (DTOCliente.getNomeCliente() == null || DTOCliente.getCpfCliente() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválidos!");
+        }
         try {
-            JsonNode clienteJson = objectMapper.readTree(json);
-            JsonNode enderecoJson = clienteJson.get("endereco");
-
-            if (clienteJson.get("nomeCliente") == null || clienteJson.get("cpfCliente") == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválidos!");
-            }
-
-            Cliente cliente = new Cliente(clienteJson.path("nomeCliente").asText(),
-                    clienteJson.path("cpfCliente").asLong(), clienteJson.path("emailCliente").asText(),
-                    clienteJson.path("telefoneCliente").asText());
-            clienteService.save(cliente);
-
-            Endereco endereco = new Endereco(enderecoJson.path("ruaEndereco").asText(),
-                    enderecoJson.path("bairroEndereco").asText(), enderecoJson.path("cidadeEndereco").asText(),
-                    enderecoJson.path("ufEndereco").asText());
-            enderecoService.save(endereco);
-
-            cliente.setIdEndereco(endereco);
-            clienteService.update(cliente.getIdCliente(), cliente);
-
+            Cliente clientSaved = clienteService.save(DTOCliente.toClienteEntity());
+            Endereco endereco = enderecoService.save(DTOCliente.getEndereco());
+            clientSaved.setIdEndereco(endereco);
+            clienteService.update(clientSaved.getIdCliente(), clientSaved);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-
     }
 }

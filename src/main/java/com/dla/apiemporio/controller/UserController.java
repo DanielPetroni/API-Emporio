@@ -1,6 +1,6 @@
 package com.dla.apiemporio.controller;
 
-import com.dla.apiemporio.model.Usuario;
+import com.dla.apiemporio.entity.Usuario;
 import com.dla.apiemporio.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;

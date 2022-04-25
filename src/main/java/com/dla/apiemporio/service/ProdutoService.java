@@ -2,7 +2,7 @@ package com.dla.apiemporio.service;
 
 import java.util.List;
 
-import com.dla.apiemporio.model.Produto;
+import com.dla.apiemporio.entity.Produto;
 import com.dla.apiemporio.repository.ProdutoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

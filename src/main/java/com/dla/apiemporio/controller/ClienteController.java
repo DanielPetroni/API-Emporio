@@ -3,7 +3,6 @@ package com.dla.apiemporio.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dla.apiemporio.dto.DTOCliente;
 import com.dla.apiemporio.entity.Cliente;
 import com.dla.apiemporio.entity.Endereco;
 import com.dla.apiemporio.service.ClienteService;
@@ -39,15 +38,14 @@ public class ClienteController {
     }
 
     @PostMapping("/")
-    public void create(@RequestBody DTOCliente DTOCliente, HttpServletResponse response) {
-        if (DTOCliente.getNomeCliente() == null || DTOCliente.getCpfCliente() == null) {
+    public void create(@RequestBody Cliente cliente, HttpServletResponse response) {
+        if (cliente.getNomeCliente() == null || cliente.getCpfCliente() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválidos!");
         }
         try {
-            Cliente clientSaved = clienteService.save(DTOCliente.toClienteEntity());
-            Endereco endereco = enderecoService.save(DTOCliente.getEndereco());
-            clientSaved.setIdEndereco(endereco);
-            clienteService.update(clientSaved.getIdCliente(), clientSaved);
+            Endereco endereco = enderecoService.save(cliente.getEnderecoCliente());
+            cliente.setEnderecoCliente(endereco);
+            clienteService.save(cliente);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

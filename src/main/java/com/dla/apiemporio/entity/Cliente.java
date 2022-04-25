@@ -4,8 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cliente {
@@ -30,9 +29,8 @@ public class Cliente {
 
     private String telefoneCliente;
 
-    @ManyToOne
-    @JoinColumn(name = "idEndereco")
-    private Endereco idEndereco;
+    @OneToOne
+    private Endereco endereco;
 
     public Cliente(String nomeCliente, Long cpfCliente, String emailCliente, String telefoneCliente) {
         this.nomeCliente = nomeCliente;
@@ -77,12 +75,12 @@ public class Cliente {
         this.telefoneCliente = telefoneCliente;
     }
 
-    public Endereco getIdEndereco() {
-        return idEndereco;
+    public Endereco getEnderecoCliente() {
+        return endereco;
     }
 
-    public void setIdEndereco(Endereco idEndereco) {
-        this.idEndereco = idEndereco;
+    public void setEnderecoCliente(Endereco endereco) {
+        this.endereco = endereco;
     }
 
 }

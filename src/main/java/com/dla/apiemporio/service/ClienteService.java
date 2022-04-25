@@ -3,13 +3,18 @@ package com.dla.apiemporio.service;
 import java.util.List;
 
 import com.dla.apiemporio.entity.Cliente;
+import com.dla.apiemporio.entity.Endereco;
 import com.dla.apiemporio.repository.ClienteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ClienteService {
+
     @Autowired
     ClienteRepository clienteRepository;
+
+    @Autowired
+    EnderecoService enderecoService;
 
     public List<Cliente> findAll() {
         return clienteRepository.findAll();
@@ -24,6 +29,8 @@ public class ClienteService {
         if (clientes.size() > 0) {
             throw new Exception("Cliente já cadastrado!");
         }
+        Endereco endereco = enderecoService.save(cliente.getEnderecoCliente());
+        cliente.setEnderecoCliente(endereco);
         clienteRepository.save(cliente);
         return cliente;
     }

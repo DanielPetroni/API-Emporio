@@ -48,7 +48,7 @@ public class ClienteService {
         Optional<Cliente> optionalClient = clienteRepository.findById(id);
         if (optionalClient.isPresent()) {
             Cliente clienteFinded = optionalClient.get();
-            clienteFinded = cliente;
+            clienteFinded.setFromObject(cliente);;
             clienteRepository.save(clienteFinded);
         } else {
             throw new Exception("Cliente não encontrado!");

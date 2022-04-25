@@ -43,6 +43,7 @@ public class Cliente {
     public Long getIdCliente() {
         return idCliente;
     }
+
     public String getNomeCliente() {
         return nomeCliente;
     }
@@ -81,6 +82,21 @@ public class Cliente {
 
     public void setEnderecoCliente(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public void setFromObject(Cliente cliente) {
+        this.nomeCliente = cliente.getNomeCliente();
+        this.cpfCliente = cliente.getCpfCliente();
+        this.emailCliente = cliente.getEmailCliente();
+        this.telefoneCliente = cliente.getTelefoneCliente();
+        String ruaEndereco = cliente.getEnderecoCliente().getRuaEndereco();
+        String bairroEndereco = cliente.getEnderecoCliente().getBairroEndereco();
+        String cidadeEndereco = cliente.getEnderecoCliente().getCidadedEndereco();
+        String ufEndereco = cliente.getEnderecoCliente().getUfEndereco();
+        this.getEnderecoCliente().setRuaEndereco(ruaEndereco);
+        this.getEnderecoCliente().setBairroEndereco(bairroEndereco);
+        this.getEnderecoCliente().setCidadedEndereco(cidadeEndereco);
+        this.getEnderecoCliente().setUfEndereco(ufEndereco);
     }
 
 }

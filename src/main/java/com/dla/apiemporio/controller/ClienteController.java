@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,19 @@ public class ClienteController {
         }
         try {
             clienteService.save(cliente);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public void create(@RequestBody Cliente cliente, @PathVariable("id") Long id, HttpServletResponse response) {
+        if (cliente.getNomeCliente() == null || cliente.getCpfCliente() == null
+                || cliente.getEnderecoCliente() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválidos!");
+        }
+        try {
+            clienteService.update(id, cliente);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

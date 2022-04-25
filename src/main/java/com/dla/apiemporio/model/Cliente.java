@@ -21,7 +21,7 @@ public class Cliente {
     private String nomeCliente;
 
     @Column(unique = true)
-    private String cpfCliente;
+    private Long cpfCliente;
 
     private String emailCliente;
 
@@ -39,11 +39,11 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
     }
 
-    public String getCpfCliente() {
+    public Long getCpfCliente() {
         return cpfCliente;
     }
 
-    public void setCpfCliente(String cpfCliente) {
+    public void setCpfCliente(Long cpfCliente) {
         this.cpfCliente = cpfCliente;
     }
 

@@ -10,10 +10,10 @@ public class Endereco {
     public Endereco() {
     }
 
-    public Endereco(String ruaEndereco, String bairroEndereco, String cidadedEndereco, String ufEndereco) {
+    public Endereco(String ruaEndereco, String bairroEndereco, String cidadeEndereco, String ufEndereco) {
         this.ruaEndereco = ruaEndereco;
         this.bairroEndereco = bairroEndereco;
-        this.cidadedEndereco = cidadedEndereco;
+        this.cidadeEndereco = cidadeEndereco;
         this.ufEndereco = ufEndereco;
     }
 
@@ -25,7 +25,7 @@ public class Endereco {
 
     private String bairroEndereco;
 
-    private String cidadedEndereco;
+    private String cidadeEndereco;
 
     @Column(length = 2)
     private String ufEndereco;
@@ -46,12 +46,12 @@ public class Endereco {
         this.bairroEndereco = bairroEndereco;
     }
 
-    public String getCidadedEndereco() {
-        return cidadedEndereco;
+    public String getCidadeEndereco() {
+        return cidadeEndereco;
     }
 
     public void setCidadedEndereco(String cidadedEndereco) {
-        this.cidadedEndereco = cidadedEndereco;
+        this.cidadeEndereco = cidadedEndereco;
     }
 
     public String getUfEndereco() {

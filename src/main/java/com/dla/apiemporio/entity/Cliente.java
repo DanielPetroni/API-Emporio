@@ -91,7 +91,7 @@ public class Cliente {
         this.telefoneCliente = cliente.getTelefoneCliente();
         String ruaEndereco = cliente.getEnderecoCliente().getRuaEndereco();
         String bairroEndereco = cliente.getEnderecoCliente().getBairroEndereco();
-        String cidadeEndereco = cliente.getEnderecoCliente().getCidadedEndereco();
+        String cidadeEndereco = cliente.getEnderecoCliente().getCidadeEndereco();
         String ufEndereco = cliente.getEnderecoCliente().getUfEndereco();
         this.getEnderecoCliente().setRuaEndereco(ruaEndereco);
         this.getEnderecoCliente().setBairroEndereco(bairroEndereco);

@@ -5,6 +5,7 @@ import com.dla.apiemporio.service.ProdutoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -50,24 +52,28 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public Produto update(@RequestBody(required = false) Produto produto, @PathVariable("id") Long id,
+    public ResponseEntity<Object> update(@RequestBody(required = false) Produto produto, @PathVariable("id") Long id,
             HttpServletResponse response) {
         if (produto == null || !Produto.isValid(produto)) {
-            System.out.println("ENTROU AQUi");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválido!");
         }
         try {
             produtoService.update(id, produto);
-            return produto;
+            HashMap<String, String> bodyResponse = new HashMap<String, String>();
+            bodyResponse.put("message", "Produto atualizado!");
+            return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
         try {
             produtoService.delete(id);
+            HashMap<String, String> bodyResponse = new HashMap<String, String>();
+            bodyResponse.put("message", "Produto deletado!");
+            return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

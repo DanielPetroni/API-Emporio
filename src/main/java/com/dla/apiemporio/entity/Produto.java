@@ -18,7 +18,7 @@ public class Produto {
 
     private String descricaoProduto;
 
-    private double valorProduto;
+    private int valorProdutoInCents;
 
     private int qtdEstoque = 0;
 
@@ -30,11 +30,11 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(String nomeProduto, String descricaoProduto, double valorProduto, int qtdEstoque,
+    public Produto(String nomeProduto, String descricaoProduto, int valorProdutoInCents, int qtdEstoque,
             Date dataValidadeProduto, Long gtinProduto) {
         this.nomeProduto = nomeProduto;
         this.descricaoProduto = descricaoProduto;
-        this.valorProduto = valorProduto;
+        this.valorProdutoInCents = valorProdutoInCents;
         this.qtdEstoque = qtdEstoque;
         this.dataValidadeProduto = dataValidadeProduto;
         this.gtinProduto = gtinProduto;
@@ -60,12 +60,12 @@ public class Produto {
         this.descricaoProduto = descricaoProduto;
     }
 
-    public double getValorProduto() {
-        return valorProduto;
+    public int getValorProdutoInCents() {
+        return valorProdutoInCents;
     }
 
-    public void setValorProduto(double valorProduto) {
-        this.valorProduto = valorProduto;
+    public void setValorProdutoInCents(int valorProdutoInCents) {
+        this.valorProdutoInCents = valorProdutoInCents;
     }
 
     public int getQtdEstoque() {
@@ -95,7 +95,7 @@ public class Produto {
     public void setFromObject(Produto produto) {
         this.nomeProduto = produto.getNomeProduto();
         this.descricaoProduto = produto.getDescricaoProduto();
-        this.valorProduto = produto.getValorProduto();
+        this.valorProdutoInCents = produto.getValorProdutoInCents();
         this.qtdEstoque = produto.getQtdEstoque();
         this.dataValidadeProduto = produto.getDataValidadeProduto();
         this.gtinProduto = produto.getGtinProduto();
@@ -104,6 +104,6 @@ public class Produto {
     static public boolean isValid(Produto produto) {
         return produto.getNomeProduto() != null && produto.getDescricaoProduto() != null
                 && produto.getDataValidadeProduto() != null
-                && produto.getValorProduto() != 0.0 && produto.gtinProduto != null;
+                && produto.getValorProdutoInCents() != 0 && produto.gtinProduto != null;
     }
 }

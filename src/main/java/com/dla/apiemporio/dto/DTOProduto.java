@@ -1,12 +1,16 @@
 package com.dla.apiemporio.dto;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import com.dla.apiemporio.entity.Produto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class DTOProduto extends Produto{
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class DTOProduto extends Produto implements Serializable {
   private String nomeProduto;
 
   private String descricaoProduto;
@@ -17,17 +21,9 @@ public class DTOProduto extends Produto{
 
   private Date dataValidadeProduto;
 
-  private MultipartFile imagemProduto;
+  private MultipartFile imageProdutos;
 
-  public DTOProduto(String nomeProduto, String descricaoProduto, int valorProdutoInCents, int qtdEstoque,
-      Date dataValidadeProduto, MultipartFile imagemProduto) {
-    this.nomeProduto = nomeProduto;
-    this.descricaoProduto = descricaoProduto;
-    this.valorProdutoInCents = valorProdutoInCents;
-    this.qtdEstoque = qtdEstoque;
-    this.dataValidadeProduto = dataValidadeProduto;
-    this.imagemProduto = imagemProduto;
-  }
+  private Long gtinProduto;
 
   public String getNomeProduto() {
     return nomeProduto;
@@ -69,12 +65,20 @@ public class DTOProduto extends Produto{
     this.dataValidadeProduto = dataValidadeProduto;
   }
 
-  public MultipartFile getUrlImagemProduto() {
-    return imagemProduto;
+  public MultipartFile getImageProdutos() {
+    return imageProdutos;
   }
 
-  public void setUrlImagemProduto(MultipartFile imagemProduto) {
-    this.imagemProduto = imagemProduto;
+  public void setImageProdutos(MultipartFile imageProdutos) {
+    this.imageProdutos = imageProdutos;
+  }
+
+  public Long getGtinProduto() {
+    return gtinProduto;
+  }
+
+  public void setGtinProduto(Long gtinProduto) {
+    this.gtinProduto = gtinProduto;
   }
 
 }

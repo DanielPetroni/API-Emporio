@@ -2,8 +2,10 @@ package com.dla.apiemporio.service;
 
 import java.util.List;
 
+import com.dla.apiemporio.dto.DTOProduto;
 import com.dla.apiemporio.entity.Produto;
 import com.dla.apiemporio.repository.ProdutoRepository;
+import com.dla.apiemporio.shared.CloudinaryShared.CloudinaryShared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +13,9 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private CloudinaryShared cloudinaryShared;
 
     public List<Produto> findAll() {
         return produtoRepository.findAll();
@@ -20,11 +25,17 @@ public class ProdutoService {
         return produtoRepository.getById(id);
     }
 
-    public Produto save(Produto produto) throws Exception {
+    public Produto save(DTOProduto dtoProduto) throws Exception {
+
+        Produto produto = new Produto();
+        produto.setFromObject(dtoProduto);
         List<Produto> produtos = findByGtin(produto.getGtinProduto());
+        System.out.println();
         if (produtos.size() > 0) {
             throw new Exception("Produto já cadastrado!");
         }
+        String urlImageProduto = cloudinaryShared.uploadFile("product", dtoProduto.getImageProdutos().getBytes());
+        produto.seturlImagemProduto(urlImageProduto);
         produtoRepository.save(produto);
         return produto;
     }
@@ -39,11 +50,14 @@ public class ProdutoService {
 
     }
 
-    public void update(Long id, Produto produto) throws Exception {
+    public Produto update(Long id, DTOProduto dtoProduto) throws Exception {
+        Produto produto = new Produto();
+        produto.setFromObject(dtoProduto);
         Produto produtoFinded = produtoRepository.getById(id);
         if (produtoFinded != null) {
             produtoFinded.setFromObject(produto);
             produtoRepository.save(produtoFinded);
+            return produto;
         } else {
             throw new Exception("Produto não encontrado!");
         }

@@ -6,15 +6,18 @@ import com.dla.apiemporio.service.ProdutoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -39,15 +42,15 @@ public class ProdutoController {
         return produtoService.findById(id);
     }
 
-    @PostMapping("/")
-    public Produto create(@RequestBody DTOProduto dtoProduto, HttpServletResponse response) {
+    @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Produto create(@ModelAttribute  DTOProduto dtoProduto, MultipartFile file) {
+        System.out.println(dtoProduto.getDescricaoProduto());
         if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto inválido!");
         }
         try {
-            Produto produto = new Produto();
-            produto.setFromObject(dtoProduto);
-            produtoService.save(produto);
+            System.out.println("passou aqui");
+            Produto produto = produtoService.save(dtoProduto);
             return produto;
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
@@ -55,18 +58,15 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody(required = false) DTOProduto dtoProduto, @PathVariable("id") Long id,
+    public Produto update(@RequestBody(required = false) DTOProduto dtoProduto,
+            @PathVariable("id") Long id,
             HttpServletResponse response) {
         if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválido!");
         }
         try {
-            Produto produto = new Produto();
-            produto.setFromObject(dtoProduto);
-            produtoService.update(id, produto);
-            HashMap<String, String> bodyResponse = new HashMap<String, String>();
-            bodyResponse.put("message", "Produto atualizado!");
-            return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
+            Produto produto = produtoService.update(id, dtoProduto);
+            return produto;
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

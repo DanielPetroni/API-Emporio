@@ -107,7 +107,7 @@ public class Produto {
     static public boolean isValid(Produto produto) {
         return produto.getNomeProduto() != null && produto.getDescricaoProduto() != null
                 && produto.getDataValidadeProduto() != null
-                && produto.getValorProdutoInCents() != 0 && produto.gtinProduto != null;
+                && produto.getValorProdutoInCents() != 0 && produto.getGtinProduto() != null;
     }
 
     public String geturlImagemProduto() {

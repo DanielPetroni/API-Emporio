@@ -24,6 +24,8 @@ public class Produto {
 
     private Date dataValidadeProduto;
 
+    private String urlImagemProduto;
+
     @Column(unique = true)
     private Long gtinProduto;
 
@@ -31,13 +33,14 @@ public class Produto {
     }
 
     public Produto(String nomeProduto, String descricaoProduto, int valorProdutoInCents, int qtdEstoque,
-            Date dataValidadeProduto, Long gtinProduto) {
+            Date dataValidadeProduto, Long gtinProduto, String urlImagemProduto) {
         this.nomeProduto = nomeProduto;
         this.descricaoProduto = descricaoProduto;
         this.valorProdutoInCents = valorProdutoInCents;
         this.qtdEstoque = qtdEstoque;
         this.dataValidadeProduto = dataValidadeProduto;
         this.gtinProduto = gtinProduto;
+        this.urlImagemProduto = urlImagemProduto;
     }
 
     public Long getIdProduto() {
@@ -105,5 +108,13 @@ public class Produto {
         return produto.getNomeProduto() != null && produto.getDescricaoProduto() != null
                 && produto.getDataValidadeProduto() != null
                 && produto.getValorProdutoInCents() != 0 && produto.gtinProduto != null;
+    }
+
+    public String geturlImagemProduto() {
+        return urlImagemProduto;
+    }
+
+    public void seturlImagemProduto(String imagemProduto) {
+        this.urlImagemProduto = imagemProduto;
     }
 }

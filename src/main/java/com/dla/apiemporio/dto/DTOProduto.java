@@ -6,7 +6,7 @@ import com.dla.apiemporio.entity.Produto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-class DTOProduto extends Produto{
+public class DTOProduto extends Produto{
   private String nomeProduto;
 
   private String descricaoProduto;

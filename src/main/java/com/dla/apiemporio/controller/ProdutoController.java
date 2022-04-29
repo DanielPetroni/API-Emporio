@@ -1,6 +1,7 @@
 package com.dla.apiemporio.controller;
 
 import com.dla.apiemporio.entity.Produto;
+import com.dla.apiemporio.dto.DTOProduto;
 import com.dla.apiemporio.service.ProdutoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,13 @@ public class ProdutoController {
     }
 
     @PostMapping("/")
-    public Produto create(@RequestBody Produto produto, HttpServletResponse response) {
-        if (produto == null || !Produto.isValid(produto)) {
+    public Produto create(@RequestBody DTOProduto dtoProduto, HttpServletResponse response) {
+        if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto inválido!");
         }
         try {
+            Produto produto = new Produto();
+            produto.setFromObject(dtoProduto);
             produtoService.save(produto);
             return produto;
         } catch (Exception e) {
@@ -52,12 +55,14 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody(required = false) Produto produto, @PathVariable("id") Long id,
+    public ResponseEntity<Object> update(@RequestBody(required = false) DTOProduto dtoProduto, @PathVariable("id") Long id,
             HttpServletResponse response) {
-        if (produto == null || !Produto.isValid(produto)) {
+        if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválido!");
         }
         try {
+            Produto produto = new Produto();
+            produto.setFromObject(dtoProduto);
             produtoService.update(id, produto);
             HashMap<String, String> bodyResponse = new HashMap<String, String>();
             bodyResponse.put("message", "Produto atualizado!");

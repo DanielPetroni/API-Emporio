@@ -2,9 +2,11 @@ package com.dla.apiemporio.dto;
 
 import java.sql.Date;
 
+import com.dla.apiemporio.entity.Produto;
+
 import org.springframework.web.multipart.MultipartFile;
 
-class DTOProduto {
+class DTOProduto extends Produto{
   private String nomeProduto;
 
   private String descricaoProduto;
@@ -67,11 +69,11 @@ class DTOProduto {
     this.dataValidadeProduto = dataValidadeProduto;
   }
 
-  public MultipartFile getimagemProduto() {
+  public MultipartFile getUrlImagemProduto() {
     return imagemProduto;
   }
 
-  public void setimagemProduto(MultipartFile imagemProduto) {
+  public void setUrlImagemProduto(MultipartFile imagemProduto) {
     this.imagemProduto = imagemProduto;
   }
 

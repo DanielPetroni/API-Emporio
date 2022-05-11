@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Scope;
 
 @Scope("singleton")
 public class CloudinaryShared {
-    @Value("${cloudnaryName}")
+    @Value("${CLOUDNARY_NAME}")
     public String cloudName;
-    @Value("${cloudnaryApiKey}")
+    @Value("${CLOUDINARY_API_KEY}")
     private String api_key;
-    @Value("${cloudnaryApiSecret}")
+    @Value("${CLOUDINARY_API_SECRET}")
     private String api_secret;
 
     public Cloudinary cloudinary;

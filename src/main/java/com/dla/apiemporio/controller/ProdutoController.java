@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -43,8 +41,7 @@ public class ProdutoController {
     }
 
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Produto create(@ModelAttribute  DTOProduto dtoProduto, MultipartFile file) {
-        System.out.println(dtoProduto.getDescricaoProduto());
+    public Produto create(@ModelAttribute DTOProduto dtoProduto) {
         if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto inválido!");
         }
@@ -57,14 +54,15 @@ public class ProdutoController {
         }
     }
 
-    @PutMapping("/{id}")
-    public Produto update(@RequestBody(required = false) DTOProduto dtoProduto,
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Produto update(@ModelAttribute DTOProduto dtoProduto,
             @PathVariable("id") Long id,
             HttpServletResponse response) {
         if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválido!");
         }
         try {
+            dtoProduto.setIdProduto(id);
             Produto produto = produtoService.update(id, dtoProduto);
             return produto;
         } catch (Exception e) {

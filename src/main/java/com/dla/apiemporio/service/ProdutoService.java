@@ -1,6 +1,7 @@
 package com.dla.apiemporio.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.dla.apiemporio.dto.DTOProduto;
 import com.dla.apiemporio.entity.Produto;
@@ -26,41 +27,56 @@ public class ProdutoService {
     }
 
     public Produto save(DTOProduto dtoProduto) throws Exception {
-
-        Produto produto = new Produto();
-        produto.setFromObject(dtoProduto);
-        List<Produto> produtos = findByGtin(produto.getGtinProduto());
-        System.out.println();
-        if (produtos.size() > 0) {
-            throw new Exception("Produto já cadastrado!");
+        try {
+            Produto produto = new Produto();
+            produto.setFromObject(dtoProduto);
+            List<Produto> produtos = findByGtin(produto.getGtinProduto());
+            System.out.println();
+            if (produtos.size() > 0) {
+                throw new Exception("Produto já cadastrado!");
+            }
+            System.out.println(dtoProduto.getImageProduto());
+            if (!dtoProduto.getImageProduto().isEmpty()) {
+                String urlImageProduto = cloudinaryShared.uploadFile("product",
+                        dtoProduto.getImageProduto().getBytes());
+                produto.seturlImagemProduto(urlImageProduto);
+            }
+            produtoRepository.save(produto);
+            return produto;
+        } catch (Exception error) {
+            throw new Exception(error);
         }
-        String urlImageProduto = cloudinaryShared.uploadFile("product", dtoProduto.getImageProdutos().getBytes());
-        produto.seturlImagemProduto(urlImageProduto);
-        produtoRepository.save(produto);
-        return produto;
     }
 
     public void delete(Long id) throws Exception {
-        Produto produto = produtoRepository.getById(id);
-        if (produto != null) {
-            produtoRepository.deleteById(id);
-        } else {
+        Optional<Produto> optionalProdutoFinded = produtoRepository.findById(id);
+        if (!optionalProdutoFinded.isPresent()) {
             throw new Exception("Produto não encontrado!");
         }
-
+        produtoRepository.delete(optionalProdutoFinded.get());
     }
 
+    
+
     public Produto update(Long id, DTOProduto dtoProduto) throws Exception {
-        Produto produto = new Produto();
-        produto.setFromObject(dtoProduto);
-        Produto produtoFinded = produtoRepository.getById(id);
-        if (produtoFinded != null) {
-            produtoFinded.setFromObject(produto);
-            produtoRepository.save(produtoFinded);
-            return produto;
-        } else {
+        Optional<Produto> optionalProdutoFinded = produtoRepository.findById(id);
+        if (!optionalProdutoFinded.isPresent()) {
             throw new Exception("Produto não encontrado!");
         }
+        Produto produtoFinded = optionalProdutoFinded.get();
+        produtoFinded.setFromObject(dtoProduto);
+        if (dtoProduto.getImageProduto() != null &&
+                !dtoProduto.getImageProduto().isEmpty()) {
+            System.out.println("cloudinary");
+            String urlImageProduto = cloudinaryShared.uploadFile("product",
+                    dtoProduto.getImageProduto().getBytes());
+            produtoFinded.seturlImagemProduto(urlImageProduto);
+        }
+        if (dtoProduto.getImageProduto().isEmpty()) {
+            produtoFinded.seturlImagemProduto(null);
+        }
+        produtoRepository.save(produtoFinded);
+        return produtoFinded;
 
     }
 

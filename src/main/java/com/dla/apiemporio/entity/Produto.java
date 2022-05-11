@@ -47,6 +47,10 @@ public class Produto {
         return idProduto;
     }
 
+    public void setIdProduto(Long id) {
+        this.idProduto = id;
+    }
+
     public String getNomeProduto() {
         return nomeProduto;
     }
@@ -83,7 +87,7 @@ public class Produto {
         return dataValidadeProduto;
     }
 
-    public void setDataValidade(Date dataValidadeProduto) {
+    public void setdataValidadeProduto(Date dataValidadeProduto) {
         this.dataValidadeProduto = dataValidadeProduto;
     }
 
@@ -91,7 +95,7 @@ public class Produto {
         return gtinProduto;
     }
 
-    public void setGtin(Long gtin) {
+    public void setgtinProduto(Long gtin) {
         this.gtinProduto = gtin;
     }
 

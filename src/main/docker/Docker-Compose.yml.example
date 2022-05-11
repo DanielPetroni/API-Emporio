@@ -15,6 +15,9 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SERVER_PORT=
+      - cloudnaryName =emporiodacidade
+      - cloudnaryApiKey =327996562365491
+      - cloudnaryApiSecret =noIvpqpsSd4Tf9PbBC8L4CW4TeQ
           
   db:
     image: 'postgres:13.1-alpine'

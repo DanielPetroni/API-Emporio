@@ -26,7 +26,6 @@ public class ClienteService {
         if (clienteFinded.isPresent()) {
             return clienteFinded.get();
         } else {
-            System.out.println("entrou aqui");
             throw new Exception("Cliente não encontrado!");
         }
 

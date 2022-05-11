@@ -17,7 +17,6 @@ public class DTOProduto extends Produto implements Serializable {
   }
 
   public void setImageProduto(MultipartFile imageProduto) {
-    System.out.println("entrou no set");
     this.imageProduto = imageProduto;
   }
 

@@ -50,7 +50,6 @@ public class ProdutoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto inválido!");
         }
         try {
-            System.out.println("passou aqui");
             Produto produto = produtoService.save(dtoProduto);
             return produto;
         } catch (Exception e) {

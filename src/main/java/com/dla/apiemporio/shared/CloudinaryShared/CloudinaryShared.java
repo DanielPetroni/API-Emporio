@@ -28,6 +28,8 @@ public class CloudinaryShared {
 
     private void configCloudinary() {
         Map<String, String> config = new HashMap<String, String>();
+        System.out.println("Config cloudinary");
+        System.out.println("Cloudnary Name" + cloudName);
         config.put("cloud_name", cloudName);
         config.put("api_key", api_key);
         config.put("api_secret", api_secret);
@@ -38,12 +40,10 @@ public class CloudinaryShared {
         if (cloudinary == null) {
             configCloudinary();
         }
-        System.out.println(api_secret);
         Map<String, String> params = new HashMap<String, String>();
         params.put("folder", folder);
         try {
             return cloudinary.uploader().upload(file, params).get("url").toString();
-
         } catch (IOException e) {
             throw new Exception(e);
         }

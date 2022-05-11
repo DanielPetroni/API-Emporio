@@ -35,16 +35,20 @@ public class ProdutoService {
         try {
             Produto produto = new Produto();
             produto.setFromObject(dtoProduto);
+            
             List<Produto> produtos = findByGtin(produto.getGtinProduto());
-            System.out.println();
             if (produtos.size() > 0) {
                 throw new Exception("Produto já cadastrado!");
             }
-            System.out.println(dtoProduto.getImageProduto());
-            if (!dtoProduto.getImageProduto().isEmpty()) {
-                String urlImageProduto = cloudinaryShared.uploadFile("product",
-                        dtoProduto.getImageProduto().getBytes());
-                produto.seturlImagemProduto(urlImageProduto);
+            if (dtoProduto.getImageProduto()!=null && !dtoProduto.getImageProduto().isEmpty()) {
+                try {
+                    String urlImageProduto = cloudinaryShared.uploadFile("product",
+                            dtoProduto.getImageProduto().getBytes());
+                    produto.seturlImagemProduto(urlImageProduto);
+                } catch (Exception error) {
+                    throw new Exception(error);
+                }
+
             }
             produtoRepository.save(produto);
             return produto;
@@ -70,7 +74,6 @@ public class ProdutoService {
         produtoFinded.setFromObject(dtoProduto);
         if (dtoProduto.getImageProduto() != null &&
                 !dtoProduto.getImageProduto().isEmpty()) {
-            System.out.println("cloudinary");
             String urlImageProduto = cloudinaryShared.uploadFile("product",
                     dtoProduto.getImageProduto().getBytes());
             produtoFinded.seturlImagemProduto(urlImageProduto);

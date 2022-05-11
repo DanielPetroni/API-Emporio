@@ -22,8 +22,13 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Produto findById(Long id) {
-        return produtoRepository.getById(id);
+    public Produto findById(Long id) throws Exception {
+        Optional<Produto> optionalProdutoFinded = produtoRepository.findById(id);
+        if (!optionalProdutoFinded.isPresent()) {
+            throw new Exception("Produto não encontrado!");
+        }
+        return optionalProdutoFinded.get();
+
     }
 
     public Produto save(DTOProduto dtoProduto) throws Exception {
@@ -55,8 +60,6 @@ public class ProdutoService {
         }
         produtoRepository.delete(optionalProdutoFinded.get());
     }
-
-    
 
     public Produto update(Long id, DTOProduto dtoProduto) throws Exception {
         Optional<Produto> optionalProdutoFinded = produtoRepository.findById(id);

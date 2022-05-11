@@ -37,7 +37,11 @@ public class ProdutoController {
 
     @GetMapping("/{id}")
     public Produto findById(@PathVariable("id") Long id) {
-        return produtoService.findById(id);
+        try {
+            return produtoService.findById(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

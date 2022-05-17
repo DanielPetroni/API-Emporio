@@ -35,7 +35,7 @@ public class ProdutoService {
         try {
             Produto produto = new Produto();
             produto.setFromObject(dtoProduto);
-            
+        
             List<Produto> produtos = findByGtin(produto.getGtinProduto());
             if (produtos.size() > 0) {
                 throw new Exception("Produto já cadastrado!");

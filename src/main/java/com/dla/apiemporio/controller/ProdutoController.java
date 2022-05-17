@@ -53,7 +53,8 @@ public class ProdutoController {
             Produto produto = produtoService.save(dtoProduto);
             return produto;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getCause().getMessage());
         }
     }
 

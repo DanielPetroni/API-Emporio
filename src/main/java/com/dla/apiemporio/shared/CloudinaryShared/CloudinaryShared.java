@@ -40,7 +40,7 @@ public class CloudinaryShared {
     }
 
     public String uploadFile(String folder, MultipartFile file) throws Exception {
-        System.out.println("Uploading file: " + file.getName());
+        System.out.println("Uploading file: " + file.getOriginalFilename());
         if (cloudinary == null) {
             configCloudinary();
         }

@@ -35,15 +35,16 @@ public class CloudinaryShared {
         config.put("api_key", api_key);
         config.put("api_secret", api_secret);
         cloudinary = new Cloudinary(config);
+        System.out.println("Cloudinary configurado!!");
     }
 
     public String uploadFile(String folder, MultipartFile file) throws Exception {
+        System.out.println("Uploading file: " + file.getName());
         if (cloudinary == null) {
             configCloudinary();
         }
         Map<String, String> params = new HashMap<String, String>();
         params.put("folder", folder);
-        System.out.println("Uploading file: " + file.getName());
         try {
             return cloudinary.uploader().upload(file.getBytes(), params).get("url").toString();
         } catch (IOException e) {

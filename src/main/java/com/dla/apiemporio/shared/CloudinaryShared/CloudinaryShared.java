@@ -1,6 +1,5 @@
 package com.dla.apiemporio.shared.CloudinaryShared;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

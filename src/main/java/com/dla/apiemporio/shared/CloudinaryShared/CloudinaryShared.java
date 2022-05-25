@@ -1,5 +1,6 @@
 package com.dla.apiemporio.shared.CloudinaryShared;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.multipart.MultipartFile;
 
 @Scope("singleton")
 public class CloudinaryShared {
@@ -36,14 +38,15 @@ public class CloudinaryShared {
         cloudinary = new Cloudinary(config);
     }
 
-    public String uploadFile(String folder, Object file) throws Exception {
+    public String uploadFile(String folder, MultipartFile file) throws Exception {
         if (cloudinary == null) {
             configCloudinary();
         }
         Map<String, String> params = new HashMap<String, String>();
         params.put("folder", folder);
+        System.out.println("Uploading file: " + file.getName());
         try {
-            return cloudinary.uploader().upload(file, params).get("url").toString();
+            return cloudinary.uploader().upload(file.getBytes(), params).get("url").toString();
         } catch (IOException e) {
             throw new Exception(e);
         }

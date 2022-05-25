@@ -43,7 +43,7 @@ public class ProdutoService {
             if (dtoProduto.getImageProduto() != null && !dtoProduto.getImageProduto().isEmpty()) {
                 try {
                     String urlImageProduto = cloudinaryShared.uploadFile("product",
-                            dtoProduto.getImageProduto().getBytes());
+                            dtoProduto.getImageProduto());
                     produto.seturlImagemProduto(urlImageProduto);
                 } catch (Exception error) {
                     throw new Exception(error);
@@ -80,7 +80,7 @@ public class ProdutoService {
         if (dtoProduto.getImageProduto() != null &&
                 !dtoProduto.getImageProduto().isEmpty()) {
             String urlImageProduto = cloudinaryShared.uploadFile("product",
-                    dtoProduto.getImageProduto().getBytes());
+                    dtoProduto.getImageProduto());
             produtoFinded.seturlImagemProduto(urlImageProduto);
         } else if (dtoProduto.getImageProduto() != null && dtoProduto.getImageProduto().isEmpty()) {
             produtoFinded.seturlImagemProduto(null);

@@ -53,7 +53,6 @@ public class ProdutoController {
             Produto produto = produtoService.save(dtoProduto);
             return produto;
         } catch (Exception e) {
-
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getCause().getMessage());
         }
     }
@@ -80,6 +79,17 @@ public class ProdutoController {
             produtoService.delete(id);
             HashMap<String, String> bodyResponse = new HashMap<String, String>();
             bodyResponse.put("message", "Produto deletado!");
+            return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+    @DeleteMapping("/{id}/file")
+    public ResponseEntity<Object> deleteFileFromProduct(@PathVariable("id") Long id) {
+        try {
+            produtoService.deleteFileFromProduct(id);
+            HashMap<String, String> bodyResponse = new HashMap<String, String>();
+            bodyResponse.put("message", "Imagem deletada!");
             return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

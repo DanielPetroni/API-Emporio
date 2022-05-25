@@ -35,12 +35,12 @@ public class ProdutoService {
         try {
             Produto produto = new Produto();
             produto.setFromObject(dtoProduto);
-        
+
             List<Produto> produtos = findByGtin(produto.getGtinProduto());
             if (produtos.size() > 0) {
                 throw new Exception("Produto já cadastrado!");
             }
-            if (dtoProduto.getImageProduto()!=null && !dtoProduto.getImageProduto().isEmpty()) {
+            if (dtoProduto.getImageProduto() != null && !dtoProduto.getImageProduto().isEmpty()) {
                 try {
                     String urlImageProduto = cloudinaryShared.uploadFile("product",
                             dtoProduto.getImageProduto().getBytes());
@@ -70,6 +70,11 @@ public class ProdutoService {
         if (!optionalProdutoFinded.isPresent()) {
             throw new Exception("Produto não encontrado!");
         }
+        List<Produto> produtos = findByGtin(dtoProduto.getGtinProduto());
+        if (produtos.size() > 0 && produtos.get(0).getIdProduto() != id) {
+            throw new Exception("Produto já cadastrado!");
+        }
+
         Produto produtoFinded = optionalProdutoFinded.get();
         produtoFinded.setFromObject(dtoProduto);
         if (dtoProduto.getImageProduto() != null &&
@@ -77,13 +82,22 @@ public class ProdutoService {
             String urlImageProduto = cloudinaryShared.uploadFile("product",
                     dtoProduto.getImageProduto().getBytes());
             produtoFinded.seturlImagemProduto(urlImageProduto);
-        }
-        if (dtoProduto.getImageProduto().isEmpty()) {
+        } else if (dtoProduto.getImageProduto() != null && dtoProduto.getImageProduto().isEmpty()) {
             produtoFinded.seturlImagemProduto(null);
         }
         produtoRepository.save(produtoFinded);
         return produtoFinded;
 
+    }
+
+    public void deleteFileFromProduct(Long id) throws Exception {
+        Optional<Produto> optionalProdutoFinded = produtoRepository.findById(id);
+        if (!optionalProdutoFinded.isPresent()) {
+            throw new Exception("Produto não encontrado!");
+        }
+        Produto produto = optionalProdutoFinded.get();
+        produto.seturlImagemProduto(null);
+        produtoRepository.save(produto);
     }
 
     private List<Produto> findByGtin(Long id) {

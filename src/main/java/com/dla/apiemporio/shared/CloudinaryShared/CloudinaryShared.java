@@ -29,11 +29,12 @@ public class CloudinaryShared {
 
     private void configCloudinary() {
         Map<String, String> config = new HashMap<String, String>();
-        System.out.println("Config cloudinary");
-        System.out.println("Cloudnary Name" + cloudName);
+
         config.put("cloud_name", cloudName);
         config.put("api_key", api_key);
         config.put("api_secret", api_secret);
+        System.out.println("Configurando cloudinary");
+        System.out.println(config);
         cloudinary = new Cloudinary(config);
         System.out.println("Cloudinary configurado!!");
     }

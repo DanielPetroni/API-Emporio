@@ -4,6 +4,7 @@ import com.dla.apiemporio.service.ClienteService;
 import com.dla.apiemporio.service.EnderecoService;
 import com.dla.apiemporio.service.ProdutoService;
 import com.dla.apiemporio.service.UserService;
+import com.dla.apiemporio.shared.CloudinaryShared.CloudinaryShared;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,11 @@ public class ApplicationConfig {
     @Bean
     public ClienteService clienteService() {
         return new ClienteService();
+    }
+
+    @Bean
+    public CloudinaryShared cloudinaryShared() {
+        return new CloudinaryShared();
     }
 
 }

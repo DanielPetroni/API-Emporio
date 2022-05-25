@@ -1,7 +1,4 @@
 package com.dla.apiemporio.entity;
-
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,11 +15,11 @@ public class Produto {
 
     private String descricaoProduto;
 
-    private int valorProdutoInCents;
+    private double valorProdutoInCents;
 
     private int qtdEstoque = 0;
 
-    private Date dataValidadeProduto;
+    private String dataValidadeProduto;
 
     private String urlImagemProduto;
 
@@ -33,7 +30,7 @@ public class Produto {
     }
 
     public Produto(String nomeProduto, String descricaoProduto, int valorProdutoInCents, int qtdEstoque,
-            Date dataValidadeProduto, Long gtinProduto, String urlImagemProduto) {
+            String dataValidadeProduto, Long gtinProduto, String urlImagemProduto) {
         this.nomeProduto = nomeProduto;
         this.descricaoProduto = descricaoProduto;
         this.valorProdutoInCents = valorProdutoInCents;
@@ -45,6 +42,10 @@ public class Produto {
 
     public Long getIdProduto() {
         return idProduto;
+    }
+
+    public void setIdProduto(Long id) {
+        this.idProduto = id;
     }
 
     public String getNomeProduto() {
@@ -63,11 +64,11 @@ public class Produto {
         this.descricaoProduto = descricaoProduto;
     }
 
-    public int getValorProdutoInCents() {
+    public double getValorProdutoInCents() {
         return valorProdutoInCents;
     }
 
-    public void setValorProdutoInCents(int valorProdutoInCents) {
+    public void setValorProdutoInCents(double valorProdutoInCents) {
         this.valorProdutoInCents = valorProdutoInCents;
     }
 
@@ -79,11 +80,11 @@ public class Produto {
         this.qtdEstoque = qtdEstoque;
     }
 
-    public Date getDataValidadeProduto() {
+    public String getDataValidadeProduto() {
         return dataValidadeProduto;
     }
 
-    public void setDataValidade(Date dataValidadeProduto) {
+    public void setdataValidadeProduto(String dataValidadeProduto) {
         this.dataValidadeProduto = dataValidadeProduto;
     }
 
@@ -91,7 +92,7 @@ public class Produto {
         return gtinProduto;
     }
 
-    public void setGtin(Long gtin) {
+    public void setgtinProduto(Long gtin) {
         this.gtinProduto = gtin;
     }
 
@@ -107,7 +108,7 @@ public class Produto {
     static public boolean isValid(Produto produto) {
         return produto.getNomeProduto() != null && produto.getDescricaoProduto() != null
                 && produto.getDataValidadeProduto() != null
-                && produto.getValorProdutoInCents() != 0 && produto.gtinProduto != null;
+                && produto.getValorProdutoInCents() != 0 && produto.getGtinProduto() != null;
     }
 
     public String geturlImagemProduto() {

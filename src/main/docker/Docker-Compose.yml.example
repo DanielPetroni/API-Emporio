@@ -15,6 +15,9 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SERVER_PORT=
+      - CLOUDNARY_NAME=emporiodacidade
+      - CLOUDINARY_API_KEY=327996562365491
+      - CLOUDINARY_API_SECRET=noIvpqpsSd4Tf9PbBC8L4CW4TeQ
           
   db:
     image: 'postgres:13.1-alpine'

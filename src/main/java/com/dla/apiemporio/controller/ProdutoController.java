@@ -6,13 +6,14 @@ import com.dla.apiemporio.service.ProdutoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,37 +37,37 @@ public class ProdutoController {
 
     @GetMapping("/{id}")
     public Produto findById(@PathVariable("id") Long id) {
-        return produtoService.findById(id);
+        try {
+            return produtoService.findById(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
-    @PostMapping("/")
-    public Produto create(@RequestBody DTOProduto dtoProduto, HttpServletResponse response) {
+    @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Produto create(@ModelAttribute DTOProduto dtoProduto) {
         if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto inválido!");
         }
         try {
-            Produto produto = new Produto();
-            produto.setFromObject(dtoProduto);
-            produtoService.save(produto);
+            Produto produto = produtoService.save(dtoProduto);
             return produto;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getCause().getMessage());
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody(required = false) DTOProduto dtoProduto, @PathVariable("id") Long id,
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Produto update(@ModelAttribute DTOProduto dtoProduto,
+            @PathVariable("id") Long id,
             HttpServletResponse response) {
         if (dtoProduto == null || !Produto.isValid(dtoProduto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados inválido!");
         }
         try {
-            Produto produto = new Produto();
-            produto.setFromObject(dtoProduto);
-            produtoService.update(id, produto);
-            HashMap<String, String> bodyResponse = new HashMap<String, String>();
-            bodyResponse.put("message", "Produto atualizado!");
-            return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
+            dtoProduto.setIdProduto(id);
+            Produto produto = produtoService.update(id, dtoProduto);
+            return produto;
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -78,6 +79,17 @@ public class ProdutoController {
             produtoService.delete(id);
             HashMap<String, String> bodyResponse = new HashMap<String, String>();
             bodyResponse.put("message", "Produto deletado!");
+            return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+    @DeleteMapping("/{id}/file")
+    public ResponseEntity<Object> deleteFileFromProduct(@PathVariable("id") Long id) {
+        try {
+            produtoService.deleteFileFromProduct(id);
+            HashMap<String, String> bodyResponse = new HashMap<String, String>();
+            bodyResponse.put("message", "Imagem deletada!");
             return new ResponseEntity<Object>(bodyResponse, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
